@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ---
 
+## [v0.4.1] - 2026-04-27
+
+### Fixed — Python floor relaxed from 3.11 to 3.9
+
+The original `requires-python = ">=3.11"` was inherited from the prior monorepo without an actual technical need; no code feature requires 3.10+ or 3.11+ (every source module uses `from __future__ import annotations`, so all the modern type-hint syntax is deferred-string only). Empirically verified that imports, CLI, and full session recording work under Python 3.9.6. Lowering to `>=3.9` lets `curl | bash` work on a stock macOS install — Apple's Command Line Tools ship a compatible `/usr/bin/python3` — without requiring a prior `brew install python@3.11`.
+
+`install.sh` updated to match: detection floor lowered to 3.9, error message points macOS users at `xcode-select --install` instead of `brew install python@3.11`, and the candidate search list expanded to include `python3.10`/`python3.9` as fallbacks.
+
 ## [v0.4.0] - 2026-04-27
 
 ### Added — `--sessions-dir DIR` CLI flag

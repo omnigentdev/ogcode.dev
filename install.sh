@@ -10,7 +10,7 @@
 #
 # Env overrides (optional):
 #   OGCODE_VERSION   git ref to install (default: pinned below). Examples:
-#                    OGCODE_VERSION=v0.4.0 ...
+#                    OGCODE_VERSION=v0.4.1 ...
 #                    OGCODE_VERSION=main   ... (latest committed, may be unstable)
 #   OGCODE_REPO      git URL to install from (default: public github repo).
 #                    Lets forks / mirrors / private clones reuse this script.
@@ -25,12 +25,12 @@
 
 set -euo pipefail
 
-OGCODE_VERSION="${OGCODE_VERSION:-v0.4.0}"
+OGCODE_VERSION="${OGCODE_VERSION:-v0.4.1}"
 OGCODE_REPO="${OGCODE_REPO:-https://github.com/omnigentdev/ogcode.dev.git}"
 OGCODE_FORCE="${OGCODE_FORCE:-0}"
 
 REQUIRED_PYTHON_MAJOR=3
-REQUIRED_PYTHON_MINOR=11
+REQUIRED_PYTHON_MINOR=9
 
 info()  { printf '\033[1;34m[ogcode]\033[0m %s\n' "$*" >&2; }
 warn()  { printf '\033[1;33m[ogcode]\033[0m %s\n' "$*" >&2; }
@@ -38,9 +38,10 @@ err()   { printf '\033[1;31m[ogcode]\033[0m %s\n' "$*" >&2; }
 have()  { command -v "$1" >/dev/null 2>&1; }
 
 find_python() {
-  # Prefer the highest available python3.X >= 3.11. Falls back to plain
-  # `python3` if that's the only one and its version satisfies the floor.
-  local candidates=(python3.13 python3.12 python3.11 python3)
+  # Prefer the highest available python3.X >= 3.9. Falls back to plain
+  # `python3` if that's the only one and its version satisfies the floor
+  # (Apple's /usr/bin/python3 ships 3.9.6 on modern macOS, which is enough).
+  local candidates=(python3.14 python3.13 python3.12 python3.11 python3.10 python3.9 python3)
   for c in "${candidates[@]}"; do
     if have "$c"; then
       local ver
@@ -62,8 +63,9 @@ ensure_python() {
   local py
   if ! py="$(find_python)"; then
     err "Python ${REQUIRED_PYTHON_MAJOR}.${REQUIRED_PYTHON_MINOR}+ is required but was not found on PATH."
-    err "Install python3.11 or newer (e.g. 'brew install python@3.11' on macOS,"
-    err "or your distro's package manager on Linux), then re-run this installer."
+    err "On macOS, Apple's Command Line Tools ship a compatible Python at"
+    err "/usr/bin/python3 — try 'xcode-select --install'. On Linux, install"
+    err "python3 via your distro's package manager. Then re-run this installer."
     exit 2
   fi
   info "Found $py ($("$py" --version 2>&1 | tr -d '\n'))"

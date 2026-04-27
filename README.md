@@ -42,12 +42,12 @@ While `ogcode.dev` is being set up, the same script is served directly from GitH
 curl -fsSL https://raw.githubusercontent.com/omnigentdev/ogcode.dev/main/install.sh | bash
 ```
 
-The installer requires Python 3.11+ and `pipx` already on `PATH` (it will not auto-install either, but prints the exact command to fix each missing prerequisite).
+The installer requires Python 3.9+ and `pipx` already on `PATH` (it will not auto-install either, but prints the exact command to fix each missing prerequisite). On modern macOS, Apple's Command Line Tools provide a compatible `/usr/bin/python3` out-of-the-box.
 
 Pin a specific version, install from a fork, or force-reinstall via env vars:
 
 ```bash
-OGCODE_VERSION=v0.4.0 curl -fsSL .../install.sh | bash
+OGCODE_VERSION=v0.4.1 curl -fsSL .../install.sh | bash
 OGCODE_REPO=https://github.com/<your-fork>/ogcode.dev.git curl -fsSL .../install.sh | bash
 OGCODE_FORCE=1 curl -fsSL .../install.sh | bash
 ```
@@ -55,9 +55,9 @@ OGCODE_FORCE=1 curl -fsSL .../install.sh | bash
 ### From a git URL (manual)
 
 ```bash
-pipx install git+https://github.com/omnigentdev/ogcode.dev.git@v0.4.0
+pipx install git+https://github.com/omnigentdev/ogcode.dev.git@v0.4.1
 # or
-python3 -m pip install --user git+https://github.com/omnigentdev/ogcode.dev.git@v0.4.0
+python3 -m pip install --user git+https://github.com/omnigentdev/ogcode.dev.git@v0.4.1
 ```
 
 ### From a source checkout (local development)
@@ -65,7 +65,7 @@ python3 -m pip install --user git+https://github.com/omnigentdev/ogcode.dev.git@
 ```bash
 git clone https://github.com/omnigentdev/ogcode.dev.git
 cd ogcode.dev
-python3.11 -m venv .venv
+python3 -m venv .venv
 .venv/bin/pip install -e .
 ```
 

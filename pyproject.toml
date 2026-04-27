@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ogcode"
-version = "0.4.0"
+version = "0.4.1"
 description = "ogcode — passthrough TUI wrapper for coding CLIs (claude, cursor agent, codex, opencode, gemini) with per-session asciicast transcripts"
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 dependencies = [
     "pyte>=0.8.2,<1",
 ]
