@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ---
 
+## [v0.4.2] - 2026-04-27
+
+### Fixed — `install.sh` now prefers user's default `python3` over newest available
+
+`find_python()` previously walked candidates highest-to-lowest, so a user with both Apple's `/usr/bin/python3` (3.9.6) and a brew-installed `python3.14` would see the script report `Found python3.14 (Python 3.14.x)` — confusing, because the user's actual default `python3` is 3.9.6, and pipx itself would typically end up bound to a different interpreter than the script reported. The selection now prefers `python3` first, falling back to versioned names (`python3.14`, …, `python3.9`) only when `python3` is missing or below the `>= 3.9` floor. The reported version now matches what `python3 --version` returns in the user's shell.
+
+### Changed — `.python-version` aligned to `3.9`
+
+Was `3.11`; now `3.9` to match the project's declared floor. Pyenv users entering the directory get the minimum supported interpreter, which is closer to the public-installer experience and surfaces any accidental 3.10+/3.11+ syntax during dev.
+
 ## [v0.4.1] - 2026-04-27
 
 ### Fixed — Python floor relaxed from 3.11 to 3.9

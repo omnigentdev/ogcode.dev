@@ -10,7 +10,7 @@
 #
 # Env overrides (optional):
 #   OGCODE_VERSION   git ref to install (default: pinned below). Examples:
-#                    OGCODE_VERSION=v0.4.1 ...
+#                    OGCODE_VERSION=v0.4.2 ...
 #                    OGCODE_VERSION=main   ... (latest committed, may be unstable)
 #   OGCODE_REPO      git URL to install from (default: public github repo).
 #                    Lets forks / mirrors / private clones reuse this script.
@@ -25,7 +25,7 @@
 
 set -euo pipefail
 
-OGCODE_VERSION="${OGCODE_VERSION:-v0.4.1}"
+OGCODE_VERSION="${OGCODE_VERSION:-v0.4.2}"
 OGCODE_REPO="${OGCODE_REPO:-https://github.com/omnigentdev/ogcode.dev.git}"
 OGCODE_FORCE="${OGCODE_FORCE:-0}"
 
@@ -38,10 +38,11 @@ err()   { printf '\033[1;31m[ogcode]\033[0m %s\n' "$*" >&2; }
 have()  { command -v "$1" >/dev/null 2>&1; }
 
 find_python() {
-  # Prefer the highest available python3.X >= 3.9. Falls back to plain
-  # `python3` if that's the only one and its version satisfies the floor
-  # (Apple's /usr/bin/python3 ships 3.9.6 on modern macOS, which is enough).
-  local candidates=(python3.14 python3.13 python3.12 python3.11 python3.10 python3.9 python3)
+  # Prefer the user's default `python3` so the reported version matches
+  # what they see when they type `python3 --version`. Fall back to
+  # versioned binaries only if `python3` is missing or below the floor.
+  # (Apple's /usr/bin/python3 ships 3.9.6 on modern macOS, which is enough.)
+  local candidates=(python3 python3.14 python3.13 python3.12 python3.11 python3.10 python3.9)
   for c in "${candidates[@]}"; do
     if have "$c"; then
       local ver

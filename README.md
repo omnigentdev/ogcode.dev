@@ -47,7 +47,7 @@ The installer requires Python 3.9+ and `pipx` already on `PATH` (it will not aut
 Pin a specific version, install from a fork, or force-reinstall via env vars:
 
 ```bash
-OGCODE_VERSION=v0.4.1 curl -fsSL .../install.sh | bash
+OGCODE_VERSION=v0.4.2 curl -fsSL .../install.sh | bash
 OGCODE_REPO=https://github.com/<your-fork>/ogcode.dev.git curl -fsSL .../install.sh | bash
 OGCODE_FORCE=1 curl -fsSL .../install.sh | bash
 ```
@@ -55,9 +55,9 @@ OGCODE_FORCE=1 curl -fsSL .../install.sh | bash
 ### From a git URL (manual)
 
 ```bash
-pipx install git+https://github.com/omnigentdev/ogcode.dev.git@v0.4.1
+pipx install git+https://github.com/omnigentdev/ogcode.dev.git@v0.4.2
 # or
-python3 -m pip install --user git+https://github.com/omnigentdev/ogcode.dev.git@v0.4.1
+python3 -m pip install --user git+https://github.com/omnigentdev/ogcode.dev.git@v0.4.2
 ```
 
 ### From a source checkout (local development)
