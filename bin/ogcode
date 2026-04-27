@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# ogcode shim — runs the package via the local venv if present, else system python.
+# Resolves symlinks so this script works when symlinked into a directory on PATH
+# (e.g. ln -s /path/to/ogcode.dev/bin/ogcode ~/.local/bin/ogcode).
+set -euo pipefail
+
+# Walk symlinks until we reach the real script, so HERE points at the
+# real ogcode.dev/bin/ directory regardless of how the shim was invoked.
+SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "$SOURCE" ]]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  TARGET="$(readlink "$SOURCE")"
+  if [[ "$TARGET" == /* ]]; then
+    SOURCE="$TARGET"
+  else
+    SOURCE="$DIR/$TARGET"
+  fi
+done
+HERE="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+PKG="$(dirname "$HERE")"
+
+if [[ -x "$PKG/.venv/bin/python" ]]; then
+  exec "$PKG/.venv/bin/python" -m ogcode "$@"
+fi
+exec python3 -m ogcode "$@"

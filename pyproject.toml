@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ogcode"
+version = "0.4.0"
+description = "ogcode — passthrough TUI wrapper for coding CLIs (claude, cursor agent, codex, opencode, gemini) with per-session asciicast transcripts"
+requires-python = ">=3.11"
+dependencies = [
+    "pyte>=0.8.2,<1",
+]
+
+[project.scripts]
+ogcode = "ogcode.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ogcode*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

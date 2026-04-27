@@ -1,0 +1,27 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+.venv/
+venv/
+ENV/
+env/
+
+*.egg-info/
+*.egg
+.eggs/
+
+build/
+dist/
+.pytest_cache/
+.coverage
+.tox/
+
+# Local session transcripts when running from a source checkout.
+sessions/
+
+# Editor / OS noise.
+.DS_Store
+.idea/
+.vscode/
+*.swp
